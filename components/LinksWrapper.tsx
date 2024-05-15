@@ -15,7 +15,7 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase";
 
 function LinksWrapper({ links }: { links: LinkType[] }) {
-    const domain = "localhost:3000/";
+    const domain = window.location.host;
     console.log(window.location.pathname);
 
     function deleteLink(id: string) {
@@ -60,7 +60,7 @@ function LinksWrapper({ links }: { links: LinkType[] }) {
                                         target="_blank"
                                         href={link.shortId}
                                     >
-                                        {domain + link.shortId}
+                                        {domain + "/" + link.shortId}
                                     </Link>
                                 </TableCell>
                                 <TableCell className="text-center">
