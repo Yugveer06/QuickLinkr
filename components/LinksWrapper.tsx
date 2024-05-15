@@ -11,18 +11,19 @@ import { Trash } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion as m } from "framer-motion";
 import Link from "next/link";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "@/firebase";
+import { useAppStore } from "@/store/store";
 
 function LinksWrapper({ links }: { links: LinkType[] }) {
     const domain = window.location.host;
-    console.log(window.location.pathname);
 
-    function deleteLink(id: string) {
-        deleteDoc(doc(db, "links", id)).then(() => {
-            console.log("link deleted");
-        });
-    }
+    const [setLinkId, setShortenedLink, setIsLinkDeleteModalOpen] = useAppStore(
+        (state) => [
+            state.setLinkId,
+            state.setShortenedLink,
+            state.setIsLinkDeleteModalOpen,
+        ],
+    );
+
     return (
         <m.div
             initial={{ opacity: 0, y: -64 }}
@@ -70,7 +71,13 @@ function LinksWrapper({ links }: { links: LinkType[] }) {
                                     <Button
                                         variant="destructive"
                                         className="p-2 dark:bg-red-500 dark:hover:bg-red-600"
-                                        onClick={() => deleteLink(link.id)}
+                                        onClick={() => {
+                                            setShortenedLink(
+                                                domain + "/" + link.shortId,
+                                            );
+                                            setLinkId(link.id);
+                                            setIsLinkDeleteModalOpen(true);
+                                        }}
                                     >
                                         <Trash size={20} />
                                     </Button>

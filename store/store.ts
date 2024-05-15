@@ -6,6 +6,12 @@ interface AppState {
 
     isLinkCreatedModalOpen: boolean;
     setIsLinkCreatedModalOpen: (open: boolean) => void;
+
+    linkId: string;
+    setLinkId: (link: string) => void;
+
+    isLinkDeleteModalOpen: boolean;
+    setIsLinkDeleteModalOpen: (open: boolean) => void;
 }
 
 export const useAppStore = create<AppState>()((set) => ({
@@ -15,4 +21,11 @@ export const useAppStore = create<AppState>()((set) => ({
     isLinkCreatedModalOpen: false,
     setIsLinkCreatedModalOpen: (open) =>
         set((state) => ({ isLinkCreatedModalOpen: open })),
+
+    linkId: "",
+    setLinkId: (id) => set((state) => ({ linkId: id })),
+
+    isLinkDeleteModalOpen: false,
+    setIsLinkDeleteModalOpen: (open) =>
+        set((state) => ({ isLinkDeleteModalOpen: open })),
 }));

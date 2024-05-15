@@ -6,7 +6,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAppStore } from "@/store/store";
 import { Button } from "./ui/button";
@@ -14,17 +13,12 @@ import { Clipboard } from "lucide-react";
 import Link from "next/link";
 
 function LinkCreatedModal() {
-    const [
-        shortenedLink,
-        setShortenedLink,
-        isLinkCreatedModalOpen,
-        setIsLinkCreatedModalOpen,
-    ] = useAppStore((state) => [
-        state.shortenedLink,
-        state.setShortenedLink,
-        state.isLinkCreatedModalOpen,
-        state.setIsLinkCreatedModalOpen,
-    ]);
+    const [shortenedLink, isLinkCreatedModalOpen, setIsLinkCreatedModalOpen] =
+        useAppStore((state) => [
+            state.shortenedLink,
+            state.isLinkCreatedModalOpen,
+            state.setIsLinkCreatedModalOpen,
+        ]);
 
     return (
         <Dialog

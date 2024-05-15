@@ -15,6 +15,7 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import LinkCreatedModal from "@/components/LinkCreatedModal";
 import { useAppStore } from "@/store/store";
 import { Loader2 } from "lucide-react";
+import LinkDeleteModal from "@/components/LinkDeleteModal";
 
 function Dashboard() {
     const domain = window.location.host;
@@ -83,6 +84,7 @@ function Dashboard() {
     return (
         <>
             <LinkCreatedModal />
+            <LinkDeleteModal />
             <div className="relative flex w-full max-w-[960px] flex-col gap-4 p-2">
                 <div className="flex flex-col gap-2">
                     <m.h1
