@@ -49,7 +49,11 @@ function LinkDeleteModal() {
                     <Link
                         className="text-teal-600 hover:underline dark:text-teal-500"
                         target="_blank"
-                        href={shortenedLink}
+                        href={
+                            shortenedLink.split("/")[
+                                shortenedLink.split("/").length - 1
+                            ]
+                        }
                     >
                         {shortenedLink}
                     </Link>{" "}
