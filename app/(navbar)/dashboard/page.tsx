@@ -28,6 +28,7 @@ function Dashboard() {
     const [input, setInput] = useState("");
     const [invalidInput, setInvalidInput] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [creatingLink, setCreatingLink] = useState(false);
 
     const [docs] = useCollection(
         user && query(collection(db, "links"), where("author", "==", userId)),
@@ -56,12 +57,15 @@ function Dashboard() {
         if (isURL(input, { require_protocol: true })) {
             setInvalidInput(false);
             const shortId = randomUUID();
+
+            setCreatingLink(true);
             await addDoc(collection(db, "links"), {
                 shortId: shortId,
                 url: input,
                 author: userId,
                 visits: 0,
             });
+            setCreatingLink(false);
             setInput("");
             setShortenedLink(domain + "/" + shortId);
             setIsLinkCreatedModalOpen(true);
@@ -126,7 +130,14 @@ function Dashboard() {
                                 variant="primary"
                                 className="rounded-xl"
                             >
-                                Go
+                                {creatingLink ? (
+                                    <Loader2
+                                        size={24}
+                                        className="animate-spin"
+                                    />
+                                ) : (
+                                    <span>Go</span>
+                                )}
                             </Button>
                         </div>
                         <AnimatePresence>

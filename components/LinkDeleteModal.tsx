@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Dialog,
     DialogClose,
@@ -12,9 +14,11 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "@/firebase";
-import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 function LinkDeleteModal() {
+    const [deleting, setDeleting] = useState(false);
     const [
         linkId,
         shortenedLink,
@@ -28,8 +32,10 @@ function LinkDeleteModal() {
     ]);
 
     async function deleteLink(id: string) {
+        setDeleting(true);
         await deleteDoc(doc(db, "links", id));
         setIsLinkDeleteModalOpen(false);
+        setDeleting(false);
     }
 
     return (
@@ -66,7 +72,11 @@ function LinkDeleteModal() {
                         variant="destructive"
                         onClick={() => deleteLink(linkId)}
                     >
-                        Delete
+                        {deleting ? (
+                            <Loader2 size={24} className="animate-spin" />
+                        ) : (
+                            <span>Delete</span>
+                        )}
                     </Button>
                 </DialogFooter>
             </DialogContent>
